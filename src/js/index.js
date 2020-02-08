@@ -3,4 +3,4 @@ import 'bootstrap';
 import $ from "jquery";
 
 // import './test';
-// import './calc1';
+import './app';
