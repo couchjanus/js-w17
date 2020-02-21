@@ -135,7 +135,6 @@ function makeProductItem($template, product) {
 }
 
 
-
 (function () {
     el("#sidebarCollapse").addEventListener('click', function () {
         openCart();
@@ -148,7 +147,6 @@ function makeProductItem($template, product) {
     });
 
     const content = document.getElementById('cartItem').content;
-
 
     const template = document.getElementById('productItem').content;
 
@@ -205,14 +203,66 @@ function makeProductItem($template, product) {
         },
         false
     );
-
+    
+    // ---------------------Step 5-------------------------------
     let addToCarts = document.querySelectorAll('.add-to-cart');
 
     addToCarts.forEach(function(addToCart) {
         addToCart.addEventListener('click', function() {
-            this.closest('.card').firstElementChild.style.transform = 'rotateY(180deg)';
-            document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, data[this.closest('.col-md-4').getAttribute('productId')]), true));
+            
+            document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, 
+            data[this.closest('.col-md-4').getAttribute('productId')]), true));
+
             changeTotal();
+
+            let imgItem = this.closest('.card').querySelector('img');
+            let rectOrigin = imgItem.getBoundingClientRect();
+            let leftStart = rectOrigin.left + 'px';
+            let topStart = rectOrigin.top + 'px';
+            let win = this.closest('.card').querySelector('.win');
+            if (imgItem) {
+                let imgClone = imgItem.cloneNode(true);
+                imgClone.classList.add('offset-img');
+                document.body.appendChild(imgClone);
+                imgItem.style.transform = 'rotateY(180deg)';
+                win.style.display = 'block';
+                let rect = document
+                        .querySelector('#sidebarCollapse')
+                        .getBoundingClientRect();
+
+                let toLeft = rect.left - 50 + 'px';
+                let toTop = rect.top - 50 + 'px';
+                
+                imgClone.animate(
+                        [
+                            {
+                                transform:
+                                    'translate3D(' +
+                                    leftStart +
+                                    ',' +
+                                    topStart +
+                                    ', 0)',
+                            },
+                            {
+                                transform:
+                                    'translate3D(' +
+                                    toLeft +
+                                    ',' +
+                                    toTop +
+                                    ',0) perspective(500px) scale3d(0.1, 0.1, 0.2)',
+                            },
+                        ],
+                        {
+                            duration: 2000,
+                        }
+                    )
+                    .onfinish = function() {
+                        imgClone.remove();
+                        imgItem.style.transform = 'rotateY(0deg)';
+                        win.style.display = 'none';
+                    };
+            }
+
         });
     });
     // ----------------------------------------------------

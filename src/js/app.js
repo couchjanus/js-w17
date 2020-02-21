@@ -1,3 +1,5 @@
+import { data } from './data.js';
+
 function el(selector) {
     return document.querySelector(selector);
 }
@@ -12,6 +14,29 @@ function closeCart() {
     el(".overlay").classList.remove("active");
 }
 
+
+function changeTotal() {
+    let price = 0;
+    let itemPrices = document.querySelectorAll('.item-price');
+    itemPrices.forEach(function (item) {
+      price += parseFloat(item.innerText);
+    });
+  
+    price = Math.round(price * 100) / 100;
+    let tax = Math.round(price * 0.05 * 100) / 100;
+    let shipping = parseFloat(document.querySelector(".shipping span").innerText);
+    let fullPrice = Math.round((price + tax + shipping) * 100) / 100;
+  
+    if (price == 0) {
+      fullPrice = 0;
+    }
+  
+    document.querySelector(".subtotal span").innerText = price;
+    document.querySelector(".tax span").innerText = tax;
+    document.querySelector(".total span").innerText = fullPrice;
+}
+
+
 (function () {
     el("#sidebarCollapse").addEventListener('click', function () {
         openCart();
@@ -23,6 +48,29 @@ function closeCart() {
         closeCart();
     });
 
+    function makeProductItem($template, product) {
+        $template
+            .querySelector('.col-md-4')
+            .setAttribute('productId', product.id);
+        $template.querySelector('.product-name').textContent = product.name;
+        $template
+            .querySelector('.card-img-top')
+            .setAttribute('src', 'images/' + product.picture[0]);
+        $template.querySelector('img').setAttribute('alt', product.name);
+        $template.querySelector('.product-price').textContent = parseFloat(product.price).toFixed(2);
+        $template.querySelector('.card-text').textContent = product.description;
+        
+        return $template;
+    }
+
+    const template = document.getElementById('productItem').content;
+
+    data.forEach(function(el) {
+        document
+            .querySelector('.showcase')
+            .append(makeProductItem(template, el).cloneNode(true));
+    });
+
     const content = document.getElementById('cartItem').content;
 
     document.querySelector('.cart-items').addEventListener(
@@ -30,6 +78,7 @@ function closeCart() {
         function(e) {
             if (e.target && e.target.matches('.remove-item')) {
                 e.target.parentNode.parentNode.remove();
+                changeTotal();
             }
             if (e.target && e.target.matches('.plus')) {
                 let el = e.target;
@@ -46,6 +95,8 @@ function closeCart() {
                 el.parentNode.nextElementSibling.querySelector(
                     '.item-price'
                 ).innerText = parseFloat(price * val).toFixed(2);
+                
+                changeTotal();
             }
 
             if (e.target && e.target.matches('.minus')) {
@@ -64,6 +115,7 @@ function closeCart() {
                     '.item-price'
                 ).innerText = parseFloat(price * val).toFixed(2);
 
+                changeTotal();
             }
         },
         false
@@ -104,7 +156,9 @@ function closeCart() {
                         true
                     )
                 );
+            changeTotal();
         });
+        
     });
 
 })();

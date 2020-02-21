@@ -135,7 +135,6 @@ function makeProductItem($template, product) {
 }
 
 
-
 (function () {
     el("#sidebarCollapse").addEventListener('click', function () {
         openCart();
@@ -148,7 +147,6 @@ function makeProductItem($template, product) {
     });
 
     const content = document.getElementById('cartItem').content;
-
 
     const template = document.getElementById('productItem').content;
 
@@ -205,14 +203,30 @@ function makeProductItem($template, product) {
         },
         false
     );
-
+    
+    // -------------------Step 2-------------------------------
     let addToCarts = document.querySelectorAll('.add-to-cart');
 
     addToCarts.forEach(function(addToCart) {
         addToCart.addEventListener('click', function() {
-            this.closest('.card').firstElementChild.style.transform = 'rotateY(180deg)';
-            document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, data[this.closest('.col-md-4').getAttribute('productId')]), true));
+            
+            document.querySelector('.cart-items').append(document.importNode(addProductToCart(content, 
+            data[this.closest('.col-md-4').getAttribute('productId')]), true));
+
             changeTotal();
+
+            let imgItem = this.closest('.card').querySelector('img');
+            let rectOrigin = imgItem.getBoundingClientRect();
+            let leftStart = rectOrigin.left + 'px';
+            let topStart = rectOrigin.top + 'px';
+            console.log(leftStart, topStart);
+
+            if (imgItem) {
+                let imgClone = imgItem.cloneNode(true);
+                imgClone.classList.add('offset-img');
+                this.closest('.card').appendChild(imgClone);
+                imgItem.style.transform = 'rotateY(180deg)';
+            }
         });
     });
     // ----------------------------------------------------

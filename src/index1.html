@@ -29,8 +29,10 @@
 
       <div class="footer">
         <div class="counts">
-          <p>Amount: 123</p>
-          <p>Total: <span>$555</span></p>
+          <p class="subtotal">Subtotal: $<span>00.00</span></p>
+          <p class="tax">Taxes (5%): $<span>00.00</span></p>
+          <p class="shipping">Shipping: $<span>05.00</span></p>
+          <p class="total">Total: $<span>00.00</span></p>
         </div>
 
       </div>
@@ -135,13 +137,7 @@
 
       <div class="album py-5 bg-light">
         <div class="container">
-
-
-          <div class="row showcase">
-
-          </div>
-
-
+          <div class="row showcase"></div>
         </div>
       </div>
 
@@ -244,8 +240,6 @@
         </footer>
       </div>
 
-
-
     </div>
   </div>
 
@@ -268,9 +262,10 @@
   <template id="productItem">
     <div class="col-md-4">
       <div class="card mb-4 box-shadow">
+        <div class="win"><h2>You are win!</h2></div>
         <img class="card-img-top" src="assets/images/03.jpg" alt="Card image cap">
         <div class="card-body">
-          <h4 class="float-right">$<span class="product-price">55.00</span></h4>
+          <h4 class="float-right">$<span class="product-price">00.00</span></h4>
           <h4 class="product-name">Fierst product</h4>
           <p class="card-text">This is a wider card.</p>
 
@@ -287,6 +282,41 @@
     </div>
   </template>
 
+  <template id="carouselItem">
+    <div class="carousel-detail-item">
+      <div class="carousel-item__image"></div>
+      <div class="carousel-item__info">
+          <div class="carousel-item__container">
+              <h2 class="carousel-item__subtitle">The grand mom </h2>
+              <h1 class="carousel-item__title">Je t'adore</h1>
+              <p class="carousel-item__description">Sed ut perspiciatis unde omnis iste natus error sit
+                  voluptatem
+                  accusantium doloremque laudantium, totam rem aperiam.</p>
+              <a href="#" class="carousel-item__btn add-to-cart">Explore now</a>
+          </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="productDetail">
+    <div class="carousel-wrapper">
+        <div class="carousel-detail">
+            <div class="carousel__nav">
+                <span id="moveLeft" class="carousel__arrow">
+                    <svg class="carousel__icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path>
+                    </svg>
+                </span>
+                <span id="moveRight" class="carousel__arrow">
+                    <svg class="carousel__icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+                    </svg>
+                </span>
+            </div>
+            
+        </div>
+    </div>
+  </template>
 
   <script src="./js/index.js"></script>
 </body>
