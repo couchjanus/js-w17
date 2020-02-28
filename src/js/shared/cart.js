@@ -55,6 +55,7 @@ export function showCart() {
         let template = document.getElementById("cartItem").content;
         document.querySelector(".cart-items").append(document.importNode(productInCart(template, item), true));
     });
+    changeTotal();
 }
 
 

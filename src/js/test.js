@@ -1,55 +1,45 @@
 'use strict';
 
-// function initStorage() {
-//   window.localStorage.getItem("basket") ?
-//     window.localStorage.getItem("basket") :
-//     window.localStorage.setItem("basket", '');
-// }
-
-function initStorage() {
-  window.localStorage.getItem("basket") ?
-    window.localStorage.getItem("basket") :
-    window.localStorage.setItem("basket", JSON.stringify([]));
+function el(selector) {
+  return document.querySelector(selector);
 }
 
-const data = [{
-  id: 0,
-  name: "Cool Cat",
-  price: 77,
-  picture: ["cat1.jpg", "cat4.jpg", "cat5.jpg", "cat6.jpg", "cat7.jpg"],
-  subtitle: ["Mama mia!", "Je t'adore", "Beach cat", "Tropical cat", "White building cat"],
-  description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dignissimos, maxime ea excepturi veritatis itaque."
-},
-{
-  id: 1,
-  name: "Black Cat",
-  price: 66,
-  picture: ["cat2.jpg", "cat4.jpg", "cat5.jpg", "cat6.jpg", "cat7.jpg"],
-  subtitle: ["Tropical cat", "Mama mia!", "Je t'adore", "Beach cat", "White building cat"],
-  description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus dignissimos, maxime ea excepturi veritatis itaque."
-},];
-
-class Product {
-  constructor(id, name, price, picture, amount){
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.picture = picture;
-        this.amount = amount;
+function myConsole(c, status='') {
+  let message, alertClass, text;
+  switch (c) {
+    case 1:
+        message = '1: Подготовка к отправке...';
+        alertClass = 'alert-primary';
+        break;
+    case 2:
+        message = '2: Отправлен...';
+        alertClass = 'alert-primary';
+        break;
+    case 3:
+        message = '3: Идет обмен...';
+        alertClass = 'alert-warning';
+        break;
+    case 4:
+        message = '4: Обмен завершен!';
+        alertClass = 'alert-success';
+        break;
+    case 5:
+        message = 'Ошибка: запрашиваемый скрипт не найден!';
+        alertClass = 'alert-danger';
+        break;
+    case 6:
+        message = 'Ошибка: сервер вернул статус: ' + status;
+        alertClass = 'alert-danger';
+        break;
+    default:
+      break;     
   }
+  text = `<div class="alert ${alertClass}" role="alert">${message}</div>`;
+	el("#console").innerHTML += text;
 }
-
+const getData = () => {
+  myConsole(1, 500);
+}
 (function() {
-
-  // Проверить, поддерживает ли браузер API sessionStorage и localStorage можно с помощью следующей строки:
-  // if (window.sessionStorage && window.localStorage) {
-  //   // объекты sessionStorage и localstorage поддерживаются
-  //   console.log('объекты sessionStorage и localstorage поддерживаются');
-  // } else {
-  //   // объекты sessionStorage и localstorage не поддерживаются
-  //   console.log('объекты sessionStorage и localstorage не поддерживаются');
-  // }
-
-  initStorage();
-  
-  // if (localStorage) {
+  el('.getBtn').addEventListener('click', getData);
+})();
